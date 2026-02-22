@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Grey Kecillll</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            font-family: 'Georgia', serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* --- HALAMAN 1: COVER --- */
+        #cover {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            transition: transform 1s ease, opacity 1s ease;
+        }
+
+        #cover.gone {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cover-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-style: italic;
+            text-shadow: 0 0 20px rgba(255,255,255,0.4);
+            line-height: 1.5;
+        }
+
+        .btn-swipe {
+            padding: 16px 45px;
+            font-size: 1.1rem;
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.6);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.4s;
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .btn-swipe:hover {
+            background: white;
+            color: #0f0c29;
+            box-shadow: 0 0 25px rgba(255,255,255,0.5);
+        }
+
+        /* --- HALAMAN 2: ENVELOPE --- */
+        #halaman-isi {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        #halaman-isi.muncul {
+            opacity: 1;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 300px;
+            height: 280px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.03);
+        }
+
+        /* Bentuk Hati Utama (Body) */
+        .heart-body {
+            position: absolute;
+            top: 0; left: 0;
+            width: 300px; height: 280px;
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            border-radius: 150px 150px 0 0;
+            transform: rotate(45deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        /* Bagian Atas (Flap) */
+        .heart-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 300px; height: 140px;
+            background: linear-gradient(145deg, #ff6b6b, #e74c3c);
+            border-radius: 150px 150px 0 0;
+            transform: rotate(45deg);
+            transform-origin: top;
+            transition: all 0.8s ease;
+            z-index: 3;
+            box-shadow: inset 0 -8px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Ikon Hati di Tengah */
+        .heart-icon {
+            font-size: 5rem;
+            color: white;
+            transform: rotate(-45deg);
+            text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+
+        /* Surat di Dalam */
+        .letter {
+            position: absolute;
+            top: 25px; left: 25px;
+            width: 250px;
+            height: 380px;
+            background: #fff;
+            transform: rotate(45deg) translateY(0);
+            transition: all 1s ease 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 0;
+        }
+
+        .letter-content {
+            transform: rotate(-45deg);
+            color: #2c3e50;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            opacity: 0;
+            transition: opacity 1s ease 1.2s;
+        }
+
+        .letter-content strong {
+            font-size: 1.1rem;
+            color: #c0392b;
+        }
+
+        .letter-content .love {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        /* Efek Buka */
+        .envelope-container.buka .heart-flap {
+            transform: rotate(45deg) translateY(-180px) scale(0.6);
+            opacity: 0;
+        }
+
+        .envelope-container.buka .letter {
+            transform: rotate(45deg) translateY(-240px);
+        }
+
+        .envelope-container.buka .letter-content {
+            opacity: 1;
+        }
+
+        .envelope-container.buka .heart-icon {
+            opacity: 0;
+        }
+
+        /* Hint Text */
+        .hint {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+        }
+
+        /* Pesan Semangat */
+        .semangat {
+            margin-top: 400px;
+            text-align: center;
+            padding: 25px 40px;
+            opacity: 0;
+            transition: opacity 1s ease 1.8s;
+        }
+
+        .semangat.show {
+            opacity: 1;
+        }
+
+        .semangat h2 {
+            color: #ff6b6b;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .semangat p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Responsif HP */
+        @media (max-width: 400px) {
+            .cover-title { font-size: 1.8rem; }
+            .envelope-container { transform: scale(0.85); }
+            .letter { width: 220px; height: 350px; }
+            .letter-content { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN 1 -->
+    <div id="cover">
+        <h1 class="cover-title">Hai Grey Kecillll-!!!!<br>Swipe up yuk...</h1>
+        <button class="btn-swipe" onclick="keHalamanBerikutnya()">⬆ Swipe Up</button>
+    </div>
+
+    <!-- HALAMAN 2 -->
+    <div id="halaman-isi">
+        <div class="envelope-container" onclick="bukaSurat()">
+            <div class="heart-body">
+                <div class="heart-icon">♥</div>
+            </div>
+            <div class="heart-flap"></div>
+            <div class="letter">
+                <div class="letter-content">
+                    <p>
+                        <strong>Hai Grey kecillll-!!!!</strong><br><br>
+                        Banyak beban yyaaa????<br>
+                        Kamu harus semangat yyaaaaaaa,<br>
+                        Lawan itu semuaaa,<br>
+                        Lewatin badainyaa,<br><br>
+                        Halangin pet
